@@ -26,7 +26,7 @@ docker run --rm \
 docker run --rm \
         -v nlst_monai-output-$VOLUME_SUFFIX:/output/ \
         -v $SCRIPTPATH/test/:/input/ \
-        insighttoolkit/simpleitk-notebooks:latest python -c "import SimpleITK, numpy; pred = SimpleITK.GetArrayFromImage(SimpleITK.ReadImage('/output/displacement-field/thisIsAnArbitraryFilename.mha')); assert pred.shape == (224, 192, 224, 3)"
+        insighttoolkit/simpleitk-notebooks:latest python -c "import SimpleITK, numpy; pred = SimpleITK.GetArrayFromImage(SimpleITK.ReadImage('/output/images/displacement-field/thisIsAnArbitraryFilename.mha')); assert pred.shape == (224, 192, 224, 3)"
 
 if [ $? -eq 0 ]; then
     echo "Tests successfully passed..."

@@ -21,7 +21,7 @@ class MONAI_Registration_NLST():  # SegmentationAlgorithm is not inherited in th
     def __init__(self):
 
         self.in_path = Path('/input/images')
-        self.out_path = Path('/output/displacement-field')
+        self.out_path = Path('/output/images/displacement-field')
         ##create displacement output folder 
         self.out_path.mkdir(parents=True, exist_ok=True)
 
