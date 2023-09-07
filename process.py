@@ -67,7 +67,6 @@ class MONAI_Registration_NLST():  # SegmentationAlgorithm is not inherited in th
 
 
     def load_inputs(self):
-
         ## Grand Challenge Algorithms expect only one file in each input folder, i.e.:
         fpath_fixed_image = list((self.in_path / 'fixed').glob('*.mha'))[0]
         fpath_moving_image = list((self.in_path / 'moving').glob('*.mha'))[0]
@@ -88,8 +87,6 @@ class MONAI_Registration_NLST():  # SegmentationAlgorithm is not inherited in th
         out = SimpleITK.GetImageFromArray(displacement_field)
         ##You can give the output-mha file any name you want, but it must be in the /output/displacement-field folder
         SimpleITK.WriteImage(out, str(self.out_path / 'thisIsAnArbitraryFilename.mha'))
-
-
         return
     
     def predict(self, inputs):
@@ -102,7 +99,6 @@ class MONAI_Registration_NLST():  # SegmentationAlgorithm is not inherited in th
 
 
     def process(self):
-
         inputs = self.load_inputs()
         outputs = self.predict(inputs)
         self.write_outputs(outputs)
