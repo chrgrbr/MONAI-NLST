@@ -69,8 +69,8 @@ class MONAI_Registration_NLST():  # SegmentationAlgorithm is not inherited in th
     def load_inputs(self):
 
         ## Grand Challenge Algorithms expect only one file in each input folder, i.e.:
-        fpath_fixed_image = list((self.in_path / 'fixed-image').glob('*.mha'))[0]
-        fpath_moving_image = list((self.in_path / 'moving-image').glob('*.mha'))[0]
+        fpath_fixed_image = list((self.in_path / 'fixed').glob('*.mha'))[0]
+        fpath_moving_image = list((self.in_path / 'moving').glob('*.mha'))[0]
         fpath_fixed_mask = list((self.in_path / 'fixed-mask').glob('*.mha'))[0]
         fpath_moving_mask = list((self.in_path / 'moving-mask').glob('*.mha'))[0]
         print('Fixed Image:', fpath_fixed_image)
@@ -86,7 +86,6 @@ class MONAI_Registration_NLST():  # SegmentationAlgorithm is not inherited in th
     def write_outputs(self, displacement_field):
         displacement_field = displacement_field.squeeze(0).permute(1, 2, 3, 0).cpu().numpy()
         out = SimpleITK.GetImageFromArray(displacement_field)
-        self.out_path.parent.mkdir(parents=True, exist_ok=True)
         ##You can give the output-mha file any name you want, but it must be in the /output/displacement-field folder
         SimpleITK.WriteImage(out, str(self.out_path / 'thisIsAnArbitraryFilename.mha'))
 
