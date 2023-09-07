@@ -1,8 +1,6 @@
 import SimpleITK
 import torch
-import numpy
 from monai.networks.nets import SegResNet
-from monai.utils import first
 from monai.transforms import (
     Compose,
     LoadImage,
@@ -10,14 +8,10 @@ from monai.transforms import (
     ScaleIntensityRange,
     ToDevice,
 )
-import warnings
 from pathlib import Path
-#pip install -q "monai-weekly[nibabel, tqdm]" itk
-# Installing the recommended dependencies 
-# https://docs.monai.io/en/stable/installation.html
 
 
-class MONAI_Registration_NLST():  # SegmentationAlgorithm is not inherited in this class anymore
+class MONAI_Registration_NLST():  
     def __init__(self):
 
         self.in_path = Path('/input/images')
@@ -34,7 +28,6 @@ class MONAI_Registration_NLST():  # SegmentationAlgorithm is not inherited in th
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print('Using Device:', self.device)
-
 
         self.model = SegResNet(
             spatial_dims=3,
@@ -85,7 +78,7 @@ class MONAI_Registration_NLST():  # SegmentationAlgorithm is not inherited in th
     def write_outputs(self, displacement_field):
         displacement_field = displacement_field.squeeze(0).permute(1, 2, 3, 0).cpu().numpy()
         out = SimpleITK.GetImageFromArray(displacement_field)
-        ##You can give the output-mha file any name you want, but it must be in the /output/displacement-field folder
+        ##You can give the output-mha file any name you want, but it must be saved to  "/output/displacement-field" 
         SimpleITK.WriteImage(out, str(self.out_path / 'thisIsAnArbitraryFilename.mha'))
         return
     
@@ -96,13 +89,10 @@ class MONAI_Registration_NLST():  # SegmentationAlgorithm is not inherited in th
             displacement_field = self.model(torch.cat((moving_image, fixed_image), dim=0).unsqueeze(0)).float()
         return displacement_field
 
-
-
     def process(self):
         inputs = self.load_inputs()
         outputs = self.predict(inputs)
         self.write_outputs(outputs)
-
         return
 
 if __name__ == "__main__":
