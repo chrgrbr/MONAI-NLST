@@ -94,7 +94,7 @@ class MONAI_Registration_NLST():  # SegmentationAlgorithm is not inherited in th
     
     def predict(self, inputs):
         # Predict the displacement field
-        moving_image, fixed_image = inputs
+        fixed_image, moving_image = inputs
         with torch.inference_mode():
             displacement_field = self.model(torch.cat((moving_image, fixed_image), dim=0).unsqueeze(0)).float()
         return displacement_field
