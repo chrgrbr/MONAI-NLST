@@ -19,7 +19,7 @@ class MONAI_Registration_NLST():
         ##create displacement output folder 
         self.out_path.mkdir(parents=True, exist_ok=True)
 
-        self.model_path = Path('/opt/algorithm/segresnet_kpt_loss_best_tre_1980_0.533.pth')  
+        self.model_path = Path('/opt/algorithm/local_net_kpt_loss_best_tre_1965_0.480.pth')  
 
 
 
